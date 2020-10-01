@@ -1,10 +1,19 @@
 #Install Pckg
+import os
 import pandas as pd
 import folium
 import googlemaps
 from password import api_key
 
 gmaps_client = googlemaps.Client(api_key)
+
+def customer_path():
+    """Odczytywanie nazw folderów z podanej ścieżki na dysku"""
+    path = '' #ścieżka do folderu z,którego chcemy pobrać nazwy folderów
+    os.makedirs('../csv/') #tworzenie podflolderu csv
+    list_subfolders_with_paths = [f.name for f in os.scandir(path) if f.is_dir()]
+    df = pd.DataFrame(list_subfolders_with_paths, columns= ['Firma'])
+    return df.to_csv('../csv/customer.csv', header=True, index=False)
 
 def read_customers():
     """Odczytuje klientów z pliku *.csv następnie korzystając z API Google Maps odszukuje firmy po nazwie
@@ -14,8 +23,7 @@ def read_customers():
     Aktualna skuteczność poprawnego rozpoznania 53/100
 
     """
-
-
+    customer_path()
     df = pd.read_csv('../csv/customers.csv') #wczytywanie danych z pliku csv
     cmp = list(df['Firma']) #zamiana kolumny Firma na listę w celu łatwiejszego iterowania
     geo_list = []
