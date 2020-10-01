@@ -19,6 +19,7 @@ Project is created with:
 * pandas >= 1.1.2
 * folium >= 0.11.0
 * googlemaps >= 4.4.23
+* os
 
 ## Another functionality
 It will be introduced in future versions of the project:
